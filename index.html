@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PWA с REST API</title>
+    <meta name="description" content="Прогрессивное веб-приложение с REST API">
+    <meta name="theme-color" content="#4a90e2">
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="icons/icon-72x72.png">
+    <link rel="apple-touch-icon" href="icons/icon-152x152.png">
+    <!-- Добавляем в head после существующих meta-тегов -->
+<!-- iOS мета-теги -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="PWA App">
+
+<!-- Splash screen для iOS -->
+<link rel="apple-touch-startup-image" href="icons/icon-512x512.png">
+
+<!-- Иконки для iOS -->
+<link rel="apple-touch-icon" href="icons/icon-152x152.png">
+<link rel="apple-touch-icon" sizes="167x167" href="icons/icon-167x167.png">
+<link rel="apple-touch-icon" sizes="180x180" href="icons/icon-180x180.png">
+
+<!-- Microsoft мета-теги -->
+<meta name="msapplication-TileColor" content="#4a90e2">
+<meta name="msapplication-TileImage" content="icons/icon-144x144.png">
+<meta name="msapplication-config" content="browserconfig.xml">
+</head>
+<body>
+    <div class="container">
+        <header class="app-header">
+            <h1>📱 PWA приложение</h1>
+            <div class="controls">
+                <button id="installBtn" class="btn btn-install">Установить</button>
+                <button id="refreshBtn" class="btn btn-refresh">Обновить данные</button>
+                <button id="clearCacheBtn" class="btn btn-clear">Очистить кэш</button>
+            </div>
+            <div class="connection-status">
+                <span id="connectionStatus" class="status-online">● Онлайн</span>
+                <span id="lastSync" class="last-sync"></span>
+            </div>
+        </header>
+
+        <main>
+            <section class="data-controls">
+                <div class="filter-section">
+                    <input type="text" id="searchInput" placeholder="Поиск..." class="search-input">
+                    <select id="filterSelect" class="filter-select">
+                        <option value="all">Все элементы</option>
+                        <option value="completed">Завершенные</option>
+                        <option value="pending">Ожидающие</option>
+                    </select>
+                </div>
+            </section>
+
+            <section class="data-section">
+                <h2>Данные с REST API</h2>
+                <div id="loading" class="loading">
+                    <div class="spinner"></div>
+                    <p>Загрузка данных...</p>
+                </div>
+                <div id="error" class="error hidden">
+                    <p>Ошибка загрузки данных</p>
+                    <button id="retryBtn" class="btn btn-retry">Повторить</button>
+                </div>
+                <div id="offlineMessage" class="offline-message hidden">
+                    <p>⚡ Вы в оффлайн-режиме. Показаны кэшированные данные</p>
+                </div>
+                <div id="dataContainer" class="data-container"></div>
+            </section>
+
+            <section class="add-data-section">
+                <h2>Добавить новый элемент</h2>
+                <form id="addForm" class="add-form">
+                    <input type="text" id="titleInput" placeholder="Название" required class="form-input">
+                    <textarea id="descriptionInput" placeholder="Описание" class="form-textarea"></textarea>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="completedInput">
+                            Завершено
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-submit">Добавить</button>
+                </form>
+            </section>
+
+            <section class="storage-info">
+                <h2>Информация о приложении</h2>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3>Cache Storage</h3>
+                        <p id="cacheStatus">Проверка...</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>IndexedDB</h3>
+                        <p id="dbStatus">Проверка...</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>Установка</h3>
+                        <p id="installStatus">Доступно</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="app-footer">
+            <p>PWA приложение &copy; 2024</p>
+            <p>Оффлайн доступ и кэширование данных</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
